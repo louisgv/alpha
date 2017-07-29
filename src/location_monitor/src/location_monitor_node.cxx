@@ -1,11 +1,10 @@
+#include <vector>
+#include <string>
+
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
 
-void OdomCallback(const nav_msgs::OdometryConstPtr& msg){
-	double x = msg->pose.pose.position.x;
-	double y = msg->pose.pose.position.y;
-	ROS_INFO("x: %f, y: %f", x, y);
-}
+#include <location_monitor/LandmarkMonitor.hxx>
 
 int main(int argc, char const *argv[]) {
 	char** argvm = const_cast<char**>(argv);
@@ -14,7 +13,9 @@ int main(int argc, char const *argv[]) {
 
 	ros::NodeHandle nh;
 
-	ros::Subscriber sub = nh.subscribe("odom", 10, OdomCallback);
+	LandmarkMonitor monitor;
+	ros::Subscriber sub = nh.subscribe("odom", 10,
+		&LandmarkMonitor::OdomCallback, &monitor);
 
 	ros::spin();
 

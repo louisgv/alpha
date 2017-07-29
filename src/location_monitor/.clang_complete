@@ -1,1 +1,3 @@
 -I/opt/ros/kinetic/include/
+-I./include/
+-I./../../devel/include/
